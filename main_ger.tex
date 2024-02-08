@@ -1,0 +1,334 @@
+%---------------------------------------------------------------------------------
+%
+% Edited by: Copyright (c) 2016 Jakub Kúdela
+% Based on: Copyright (c) 2015 Jan Küster
+%
+% The MIT License (MIT)
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%	
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+% THE SOFTWARE.
+%
+%---------------------------------------------------------------------------------
+
+%=================================================================================
+%   Preamble
+%=================================================================================
+
+\title{Lebenslauf}
+\author{Sarah Tischer}
+\date{September 2023}
+
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}	
+
+\usepackage[bitstream-charter]{mathdesign} % Font
+\usepackage[T1]{fontenc}
+\usepackage{moresize} % More font size definitions
+
+\usepackage{hyperref} % Needed for active links
+
+%\usepackage{showframe}	% Uncomment to show frames around the margins for debugging purposes
+
+\usepackage[a4paper]{geometry} % Page style	
+\geometry{top=1.75cm, bottom=.6cm, left=1.5cm, right=1.5cm} % Page margins	
+
+\usepackage{fancyhdr} % Customized header	
+\pagestyle{fancy}
+
+\setlength{\headheight}{5pt} % Height of header		
+
+\lhead{} % Left header content
+\chead{\small { % Central header content
+  Sarah Tischer $\cdot$ 
+  Linguistic Project Manager $\cdot$ 
+  Hamburg, Germany
+}}
+\rhead{} % Right header content
+
+\setlength{\parindent}{0mm} %Paragraph indentation
+
+%---------------------------------------------------------------------------------
+%   TABLE/ARRAY DEFINITIONS
+%---------------------------------------------------------------------------------
+
+% For layouting tables
+\usepackage{multicol}			
+\usepackage{multirow}
+
+% Extended aligning of tabular cells
+\usepackage{array}
+\newcolumntype{x}[1]{>{\raggedleft\hspace{0pt}}p{#1}}
+
+%---------------------------------------------------------------------------------
+%   GRAPHICS DEFINITIONS
+%---------------------------------------------------------------------------------
+
+\usepackage{graphicx} % For header image
+
+% For floating figures
+\usepackage{wrapfig}
+\usepackage{float}
+
+% For drawing graphics		
+\usepackage{tikz}				
+\usetikzlibrary{shapes, backgrounds, mindmap, trees}
+
+%---------------------------------------------------------------------------------
+% COLOR DEFINITIONS
+%---------------------------------------------------------------------------------
+
+\usepackage{color}
+
+\definecolor{sectcol}{RGB}{112,128,144} % CV event headlines, dark blue
+\definecolor{bgcol}{RGB}{169,169,169} % Grey
+\definecolor{pagecol}{RGB}{255,255,255} % Page color
+\definecolor{lettercol}{RGB}{47,79,79} % Letter color in metadata
+
+%---------------------------------------------------------------------------------
+%   HEADER DEFINITION
+%---------------------------------------------------------------------------------
+
+\renewcommand{\headrulewidth}{0pt} % Remove top header line
+\renewcommand{\footrulewidth}{0pt} % Remove bottom header line 	
+\renewcommand{\thepage}{} % Remove pagenum	
+\renewcommand{\thesection}{} % Remove section num			
+
+%---------------------------------------------------------------------------------
+%   ARROW GRAPHICS (in Tikz)
+%---------------------------------------------------------------------------------
+
+% Bullet point arrows
+% Six pointed arrows pointing to the left and right
+\newcommand{\tzlarrow}{(0,0) -- (0.2,0) -- (0.3,0.2) -- (0.2,0.4) -- (0,0.4) -- (0.1,0.2) -- cycle;}	
+\newcommand{\tzrarrow}{(0,0.2) -- (0.1,0) -- (0.3,0) -- (0.2,0.2) -- (0.3,0.4) -- (0.1,0.4) -- cycle;}
+
+% Include the left arrow into a tikz picture
+% Param 1: fill color
+\newcommand{\larrow}[1]{
+  \begin{tikzpicture}[scale=0.58]
+    \filldraw[fill=#1!100,draw=#1!100!black] \tzlarrow
+  \end{tikzpicture}
+}
+
+% Include the right arrow into a tikz picture
+% Param 1: fill color
+\newcommand{\rarrow}{
+  \begin{tikzpicture}[scale=0.7]
+    \filldraw[fill=sectcol!100,draw=sectcol!100!black] \tzrarrow
+  \end{tikzpicture}
+}
+
+%---------------------------------------------------------------------------------
+%   METADATA
+%---------------------------------------------------------------------------------
+
+% Create arrow bullet list with metadata 
+% Param 1: Metadata lines
+\newcommand{\metasection}[1]{
+  \begin{tabular*}{1\textwidth}{p{3.5cm} p{11cm}}
+    & \larrow{bgcol} \large \raggedright \textcolor{lettercol} {#1}  \vspace{3pt}
+  \end{tabular*}
+}
+
+%---------------------------------------------------------------------------------
+%   SKILLS
+%---------------------------------------------------------------------------------
+
+% Create two columns with skill set and values
+% Param 1: Skill set
+% Param 2: Skill values
+\newcommand{\bulletsection}[2]{
+  \begin{tabular*}{1\textwidth}{p{3cm} p{15cm}}
+    \normalsize \textcolor{bgcol} {#1} & \raggedright{#2} \vspace{3pt}
+  \end{tabular*}
+}
+
+%---------------------------------------------------------------------------------
+%   CV EVENTS
+%---------------------------------------------------------------------------------
+
+% Create a coloured box with arrows and title as headline
+% Param 1: Section title
+\newcommand{\cvsection}[1]{
+  \colorbox{sectcol}{\mystrut \makebox[1\linewidth][l]{ % l/r = text alignment left/right
+    \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \hspace{-8pt} % hspace = space between arrows
+    \larrow{bgcol} \textcolor{white}{\textbf{#1}}\hspace{4pt}
+  }}
+}
+
+% Create a stretched box with timeline and CV event name
+% Param 1: Timeline
+% Param 2: Event name
+\newcommand{\cvevent}[2]{
+  \begin{tabular*}{1\textwidth}{p{2cm} p{15.6cm}}
+    \vspace{-5pt} \raggedright \textcolor{bgcol}{#1} & 
+    \vspace{-5pt} \raggedright \textbf{#2} 
+    % space between text line and horizontal line; hrule = horizontal line
+    \vspace{5pt} \textcolor{bgcol}{\hrule} 
+  \end{tabular*}
+}
+
+% Create a stretched box with bulleted responsibilities
+% Param 1: Responsibilities
+\newcommand{\cvdetail}[1]{
+  \begin{tabular*}{1\textwidth}{p{2cm} p{15.6cm}}
+    & \larrow{bgcol} \raggedright{#1} \vspace{3pt}
+  \end{tabular*}
+}
+
+%---------------------------------------------------------------------------------
+%   CUSTOM STRUT FOR EMPTY BOXES
+%---------------------------------------------------------------------------------
+
+\newcommand{\mystrut}{\rule[-.2\baselineskip]{0pt}{\baselineskip}}
+
+%=================================================================================
+%   DOCUMENT BODY
+%=================================================================================
+
+\begin{document}
+
+\pagecolor{pagecol}
+
+%---------------------------------------------------------------------------------
+%   CV HEADLINE
+%---------------------------------------------------------------------------------
+
+\vspace{-20pt}
+
+\hspace{-0.25\linewidth}\colorbox{bgcol}{
+  \makebox[1.5\linewidth][c]{
+    \HUGE{\textcolor{white}{\textsc{Sarah Tischer}}} 
+    \textcolor{sectcol}{\rule[-1mm]{1mm}{0.9cm}} % pipe in header
+    \HUGE{\textcolor{white}{\textsc{Lebenslauf}}}
+  }
+}
+
+%---------------------------------------------------------------------------------
+%   IMAGE
+%---------------------------------------------------------------------------------
+
+\begin{figure}[H]
+\begin{flushleft}
+  \includegraphics[width=0.2\linewidth]{IMG_1426}
+\end{flushleft}
+\end{figure}
+
+%---------------------------------------------------------------------------------
+%   METADATA
+%---------------------------------------------------------------------------------
+
+\vspace{-123pt}
+
+\metasection{Kieler Str. 456 \\ \hspace{8pt} 22525 Hamburg} 
+\metasection{+49 163 175 0765}
+\metasection{\href{mailto:tischer000@gmail.com}{tischer000@gmail.com}}
+\metasection{\href{https://linkedin.com/in/sarah-tischer}{linkedin.com/in/sarah-tischer}}
+
+\vspace{25pt}
+
+%--------------------------------------------------------------------------------
+%   SKILLS AND INTERESTS
+%---------------------------------------------------------------------------------
+
+\cvsection{Kenntnisse und Interessen}
+
+\bulletsection{Sprachkenntnisse:}{Deutsch (Muttersprache), Englisch (verhandlungssicher), Spanisch (Grundkenntnisse), \\ 
+  Kiswahili (Grundkenntnisse)}
+\bulletsection{Computerkenntnisse:}{Google Workspace, MS 365, diverse interne NLP-Frameworks, Versionsverwaltungssysteme}
+\bulletsection{Grundkenntnisse:}{Python, Latex, Markdown, RegEx, Command Line, SQL, HTML, CSS}
+
+%---------------------------------------------------------------------------------
+%   CORPORATE EXPERIENCE
+%---------------------------------------------------------------------------------
+
+\cvsection{Berufserfahrung}
+
+\cvevent{Jun 2021 - Jun 2023}{Language Lead (Natural Language Processing), Google (via Adecco)}
+\cvdetail{Hauptansprechpartner für das Natural Language Processing des deutschen Google Assistant}
+\cvdetail{Koordination aktiver Aufträge und Priorisierung auf Basis der Teamauslastung sowie Berechnung von \\ 
+  \hspace{8pt} Metriken zur Bewertung der Teamauslastung und -leistung}
+\cvdetail{Qualitätssicherung der Daten durch Überprüfung und Freigabe der Arbeitsergebnisse aller \\ 
+  \hspace{8pt} Teammitglieder, um einen gleichbleibend hohen Standard sicherzustellen}
+\cvdetail{Erwartungen von Kunden und Stakeholdern managen}
+\cvdetail{Umsetzung neuer Technologien und Projekte im Tagesgeschäft}
+\cvdetail{Beteiligung an Einstellungsprozessen und Durchführung von Vorstellungsgesprächen}
+\cvdetail{Arbeit an komplexen NLP-Aufgaben}
+
+\cvevent{Sep 2016 - Mai 2021}{Associate Linguist, Google (via Adecco)}
+\cvdetail{Entwicklung, Pflege und Verbesserung von NLU-Grammatikmodelle und NLG-Templates}
+\cvdetail{Durchführung von Präzisionsanalysen und Verfassen von Auswertungsberichten}
+\cvdetail{Identifizierung von Fehler/Regressionen und Erarbeitung von Lösungen}
+
+%---------------------------------------------------------------------------------
+%   HIGHER EDUCATION
+%---------------------------------------------------------------------------------
+
+\cvsection{Hochschulbildung}
+
+\cvevent{Okt 2013 - Aug 2016}{Masterstudium, English as a World Language, Uni Hamburg}
+\cvdetail{Abschlussnote: 1,51 (gut)}
+\cvdetail{Abschlussarbeit: „Negotiation in Intercultural Business E-Mails Using English as Lingua Franca: \\ 
+  \hspace{8pt} A Systemic Functional Approach“}
+
+\cvevent{Okt 2009 - Sep 2013}{Bachelorstudium, Afrikanische Sprachen und Kulturen, Uni Hamburg}
+\cvdetail{Abschlussnote: 2,28 (gut)}
+\cvdetail{Abschlussarbeit: „Prestige und Vitalität autochthoner Sprachen Namibias: Wird die in der \\ 
+  \hspace{8pt} Verfassung festgelegte Sprachpolitik umgesetzt?“}
+
+\newpage
+
+%---------------------------------------------------------------------------------
+%   PRACTICAL EXPERIENCE
+%---------------------------------------------------------------------------------
+
+\cvsection{Nebentätigkeiten}
+
+\cvevent{Jan 2015 - Aug 2016}{Studentische Hilfskraft, Erstellung eines Schulbuchkorpus, Uni Hamburg}
+\cvdetail{Datenerfassung und -verarbeitung, Markierung von Textdateien, manuelle Bearbeitung und \\ 
+  \hspace{8pt} Annotation von Daten in EXMARaLDA}
+
+\cvevent{Apr 2014 - Aug 2016}{Tutorin Einführungsseminar "Linguistik des Deutschen", Uni Hamburg}
+\cvdetail{Durchführung vorgegebener und selbst entwickelter Übungen, Anleitung zum selbständigen \\ 
+  \hspace{8pt} Lösen von Aufgaben, Unterstützung bei der Prüfungsvorbereitung und bei mündlichen Prüfungen}
+
+\cvevent{Dez 2013 - Jan 2015}{Studentische Hilfskraft im Projekt Kobalt-DaF, Uni Hamburg}
+\cvdetail{Korpusbasierte Analyse von Lernertexten (DaF) mit WebAnno, projektspezifische Anpassung von \\ 
+  \hspace{8pt} Annotationsrichtlinien und Tag-Sets}
+
+\cvevent{Jan 2012 - Mai 2012}{Studentische Hilfskraft, Digitalisierung von Sprachdaten, Uni Hamburg}
+\cvdetail{Digitale Verarbeitung von handschriftlichen phonetischen Transkriptionen für das Programm \\ 
+  \hspace{8pt} Toolbox, Transkription von englischen Interview-Audiodateien}
+
+\cvevent{Sep 2011 - Okt 2011}{Praktikantin im Abgeordnetenbüro Hartwig Fischer, MdB, Deutscher Bundestag, Berlin}
+\cvdetail{Unterstützung bei der Vorbereitung der Veranstaltung "Africa meets Business", Vorbereitung und \\ 
+  \hspace{8pt} Verfassen von Pressemitteilungen sowie Antwortentwürfen für Bürgereingaben und Fachanfragen}
+
+\cvevent{Jul 2004 - Aug 2016}{Studentische Aushilfskraft, Kodak Graphic Communications GmbH, Osterode am Harz}
+\cvdetail{Line Production, Lager \& Versand, Qualitätssicherung}
+
+%---------------------------------------------------------------------------------
+%   INTERNATIONAL EXPERIENCE
+%---------------------------------------------------------------------------------
+
+\cvsection{Auslandsaufenthalte}
+
+\cvevent{Okt 2012 - Feb 2013}{Auslandssemester, State University of Zanzibar, Tansania}
+\cvdetail{Kurse: Communication Skills, Applied Linguistics, Sprachkurs "Advanced Kiswahili"}
+
+\cvevent{Aug 2008 - Sep 2009}{Praktikum, Hammerstein Lodge \& Camp, Maltahöhe, Namibia}
+\cvdetail{Inventarverwaltung, Gästebetreuung, Personalbetreuung, Wildtierpflege}
+
+\end{document}
