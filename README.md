@@ -1,2 +1,2 @@
-# resume
-English resume
+# Resume
+My resume in English and German
