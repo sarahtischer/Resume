@@ -1,6 +1,6 @@
-# Résumé
-My résumé in English and German
+# Resume
+My resume in English and German
 
-[English PDF](Tischer_Resume_eng.pdf)
+[English PDF](Tischer_Sarah_Resume_English.pdf)
 
-[German PDF](Tischer_Resume_ger.pdf)
+[German PDF](Tischer_Sarah_Resume_German.pdf)
